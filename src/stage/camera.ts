@@ -3,17 +3,74 @@ import { toRadians } from "../math_util";
 import { device, canvas, fovYDegrees, aspectRatio } from "../renderer";
 
 class CameraUniforms {
-    readonly buffer = new ArrayBuffer(16 * 4);
+    readonly buffer = new ArrayBuffer(72 * 4);
     private readonly floatView = new Float32Array(this.buffer);
 
     set viewProjMat(mat: Float32Array) {
         // TODO-1.1: set the first 16 elements of `this.floatView` to the input `mat`
-        for(var i = 0; i < 16; i++) {
-            this.floatView[i] = mat[i];
-        }
+        this.floatView.set(mat, 0);
     }
 
     // TODO-2: add extra functions to set values needed for light clustering here
+    // Using floatView as one big buffer to send to shaders
+
+    // floatView layout:
+    // [  0 .. 15]  viewProjMat         (mat4x4<f32>)
+    // [ 16 .. 31]  inverseProjMat      (mat4x4<f32>)
+    // [ 32 .. 47]  viewMat             (mat4x4<f32>)
+    // [ 48 .. 63]  invViewMat          (mat4x4<f32>)
+    // [ 64 ]       zNear               (params0.x)
+    // [ 65 ]       zFar                (params0.y)
+    // [ 66 ]       width (pixels)      (params0.z)
+    // [ 67 ]       height (pixels)     (params0.w)
+    // [ 68 ]       tileCountX          (params1.x)
+    // [ 69 ]       tileCountY          (params1.y)
+    // [ 70 ]       tileCountZ          (params1.z)
+    // [ 71 ]       logScaleK           (params1.w) - logarithmic depth distribution factor
+    
+    set inverseProjMat(mat: Float32Array) {
+        this.floatView.set(mat, 16);
+    }
+    
+    set viewMat(mat: Float32Array) {
+        this.floatView.set(mat, 32);
+    }
+
+    set invViewMat(mat: Float32Array) {
+        this.floatView.set(mat, 48);
+    }
+    
+    set zNear(value: number) {
+        this.floatView[64] = value;
+    }
+
+    set zFar(value: number) {
+        this.floatView[65] = value;
+    }
+
+    set logScaleK(value: number) {
+        this.floatView[71] = value;
+    }
+
+    set tileCountX(value: number) {
+        this.floatView[68] = value;
+    }
+
+    set tileCountY(value: number) {
+        this.floatView[69] = value;
+    }
+
+    set tileCountZ(value: number) {
+        this.floatView[70] = value;
+    }
+
+    set width(size: number) {
+        this.floatView[66] = size;
+    }
+
+    set height(size: number) {
+        this.floatView[67] = size;
+    }
 }
 
 export class Camera {
@@ -29,6 +86,12 @@ export class Camera {
     pitch: number = 0;
     moveSpeed: number = 0.004;
     sensitivity: number = 0.15;
+
+    // TODO-2: added extra properties needed for light clustering here
+    tileCountX: number = 16;
+    tileCountY: number = 16;
+    tileCountZ: number = 16;
+    logScaleK: number = 5.0;  // Logarithmic depth distribution factor 
 
     static readonly nearPlane = 0.1;
     static readonly farPlane = 1000;
@@ -140,6 +203,18 @@ export class Camera {
         this.uniforms.viewProjMat = viewProjMat;
 
         // TODO-2: write to extra buffers needed for light clustering here
+        this.uniforms.inverseProjMat = mat4.inverse(this.projMat);
+        this.uniforms.viewMat = viewMat;
+        this.uniforms.invViewMat = mat4.inverse(viewMat);
+        this.uniforms.zNear = Camera.nearPlane;
+        this.uniforms.zFar = Camera.farPlane;
+        this.uniforms.tileCountX = this.tileCountX;
+        this.uniforms.tileCountY = this.tileCountY; 
+        this.uniforms.tileCountZ = this.tileCountZ; 
+        this.uniforms.logScaleK = this.logScaleK;
+
+        this.uniforms.width = canvas.width;
+        this.uniforms.height = canvas.height;
 
         // TODO-1.1: upload `this.uniforms.buffer` (host side) to `this.uniformsBuffer` (device side)
         // check `lights.ts` for examples of using `device.queue.writeBuffer()`

@@ -11,11 +11,22 @@ struct LightSet {
 }
 
 // TODO-2: you may want to create a ClusterSet struct similar to LightSet
+struct ClusterSet {
+    numLights: u32,
+    lights: array<u32, ${maxLights}>
+}
 
 struct CameraUniforms {
     // TODO-1.3: add an entry for the view proj mat (of type mat4x4f)
-    viewProjMat: mat4x4<f32>
-}
+    viewProjMat : mat4x4<f32>,
+    inverseProjMat : mat4x4<f32>,
+    viewMat : mat4x4<f32>,
+    invViewMat : mat4x4<f32>,
+    // params0 = (zNear, zFar, width, height)
+    params0 : vec4<f32>,
+    // params1 = (tileCountX, tileCountY, tileCountZ, tileSizeOrZScale)
+    params1 : vec4<f32>,
+};
 
 // CHECKITOUT: this special attenuation function ensures lights don't affect geometry outside the maximum light radius
 fn rangeAttenuation(distance: f32) -> f32 {
@@ -29,3 +40,4 @@ fn calculateLightContrib(light: Light, posWorld: vec3f, nor: vec3f) -> vec3f {
     let lambert = max(dot(nor, normalize(vecToLight)), 0.f);
     return light.color * lambert * rangeAttenuation(distToLight);
 }
+

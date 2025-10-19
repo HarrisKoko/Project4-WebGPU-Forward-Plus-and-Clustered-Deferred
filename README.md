@@ -13,10 +13,7 @@ WebGL Forward+ and Clustered Deferred Shading
 
 ### Demo Video
 
-<video src="img/cluster_deferred.mp4" controls loop muted playsinline width="640">
-  Your browser does not support the video tag.
-</video>
-
+[![](img/cluster_deferred.gif)]
 
 ### Introduction
 

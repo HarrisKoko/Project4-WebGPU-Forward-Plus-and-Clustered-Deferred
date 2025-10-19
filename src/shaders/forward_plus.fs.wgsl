@@ -22,11 +22,6 @@
 // params0 = (zNear, zFar, screenWidthPx, screenHeightPx)
 // params1 = (tilesX, tilesY, tilesZ, k)
 
-// @group(0) @binding(0) var<uniform> uCamera : CameraUniforms;
-// @group(0) @binding(1) var<storage, read> uLightSet : LightSet;
-// @group(0) @binding(2) var<storage, read_write> uClusters : array<ClusterSet>;
-
-
 @group(${bindGroup_scene}) @binding(0) var<uniform> camera : CameraUniforms;
 @group(${bindGroup_scene}) @binding(1) var<storage, read> lightSet: LightSet;
 @group(${bindGroup_scene}) @binding(2) var<storage, read> clusters: array<ClusterSet>;

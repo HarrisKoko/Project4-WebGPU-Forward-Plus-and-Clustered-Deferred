@@ -30,10 +30,6 @@
 // params0 = (zNear, zFar, screenWidthPx, screenHeightPx)
 // params1 = (tilesX, tilesY, tilesZ, k)
 
-// @group(0) @binding(0) var<uniform> uCamera : CameraUniforms;
-// @group(0) @binding(1) var<storage, read> uLightSet : LightSet;
-// @group(0) @binding(2) var<storage, read_write> uClusters : array<ClusterSet>;
-
 @group(0) @binding(0) var<uniform> uCamera : CameraUniforms;
 @group(0) @binding(1) var<storage, read> uLightSet : LightSet;
 @group(0) @binding(2) var<storage, read_write> uClusters : array<ClusterSet>;

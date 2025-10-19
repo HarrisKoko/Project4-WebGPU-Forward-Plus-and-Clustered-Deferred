@@ -59,7 +59,7 @@ export class ForwardPlusRenderer extends renderer.Renderer {
             ]
         });
 
-        // Depth buffer
+        // Depth buffer for proper 3D rendering
         this.depthTexture = renderer.device.createTexture({
             size: [renderer.canvas.width, renderer.canvas.height],
             format: "depth24plus",

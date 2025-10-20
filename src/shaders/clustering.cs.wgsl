@@ -35,7 +35,7 @@
 @group(0) @binding(2) var<storage, read_write> uClusters : array<ClusterSet>;
 
 const MAX_LIGHTS_PER_CLUSTER : u32 = ${maxLights}u;
-const LIGHT_RADIUS : f32 = f32(${lightRadius});
+const LIGHT_RADIUS : f32 = f32(2.f);
 
 // Logarithmic depth slicing: returns [near, far] z bounds for this slice.
 fn slice_edges_z(slice: u32) -> vec2<f32> {

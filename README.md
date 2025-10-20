@@ -38,9 +38,9 @@ Clustered Deferred Shading extends the Forward+ approach by performing lighting 
 
 In the first stage, called the G-buffer pass, the renderer outputs several textures that store geometric and material information for each visible pixel. The albedo, position (depth), and normals are saved as textures shown below:
 
-![Albedo](img/alebdo.png)
+![Albedo](img/albedo.png)
 ![normals](img/normal.png)
-![pos](img/positon.png)
+![pos](img/position.png)
 
 During the second stage, the fullscreen lighting pass, a quad covers the entire screen and performs lighting using the data stored in the G-buffer. For each pixel, the fragment shader determines which cluster the fragment belongs to based on its screen coordinates and view-space depth, retrieves the list of lights affecting that cluster, and accumulates their contributions using the G-buffer position and normal.
 

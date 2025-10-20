@@ -8,8 +8,8 @@ WebGL Forward+ and Clustered Deferred Shading
   Windows 24H2, i9-12900H @ 2.50GHz 16GB, RTX 3070TI Mobile
 
 ### Live Demo
-Click the image below for an interactive demo!
-[![](img/thumb.png)]([http://TODO.github.io/Project4-WebGPU-Forward-Plus-and-Clustered-Deferred](https://harriskoko.github.io/Project4-WebGPU-Forward-Plus-and-Clustered-Deferred/))
+Click the link below for an interactive demo!
+[[http://TODO.github.io/Project4-WebGPU-Forward-Plus-and-Clustered-Deferred](https://harriskoko.github.io/Project4-WebGPU-Forward-Plus-and-Clustered-Deferred/](https://harriskoko.github.io/Project4-WebGPU-Forward-Plus-and-Clustered-Deferred/)](https://harriskoko.github.io/Project4-WebGPU-Forward-Plus-and-Clustered-Deferred/)
 
 ### Demo Video
 

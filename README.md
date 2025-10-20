@@ -58,7 +58,7 @@ Thus, this becomes more of a quality test rather than performance. For testing p
 
 Now we are able to compare each of the implementations. Below is a graph showing the frame rate of each implementation with increasing number of lights. 
 ![fps](img/lightcount.png)
-We can see that clustered deferred performs best in all cases. This makes sense as it is the most optimized method of the three for rendering. It capitalizes on the optimizations of forward plus and deferred, making it the best performer of the three. Additionally, we see that as the number of lights increases, the rate at which fps drops decreases for clustered forward+ and clustered deferred. This is because these algorithms are meant for handling large numbers of lights. Tiling lights means that increasing the number of lights won't be as difficult to compute as a naive implementation. If naive were to run better, we would likely see that rate at which naive falls off would be much faster compared to these two implementations. 
+We can see that clustered deferred performs best in all cases. This makes sense as it is the most optimized method of the three for rendering. It capitalizes on the optimizations of forward plus and deferred, making it the best performer of the three. The most important takeaway from these graphs is that as light count increases, clustered forward+ and clustered deferred, the execution time does not increase drastically. Compared to naive, the execution time of the two clustered implementation increases at a rate far less. This proves that these implementations are accurate in their optimizations for handling increased light counts.
 
 ### Credits
 

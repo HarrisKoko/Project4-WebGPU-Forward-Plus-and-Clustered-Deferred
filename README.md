@@ -50,10 +50,20 @@ Clustered Deferred Shading effectively decouples lighting cost from scene comple
 
 ## Performance Analysis
 
+Before we compare the implementations, we should deteremine what parameters they perform best with. The primary factor into performance for this project is the max number of lights per tile. Shown below is a graph which compares how the max number of lights per tile affect performance
+![max](img/lightspertile.png)
+Each method was tested on a scene with 5000 lights to adequately stress test the number of maxx lights per tile. Naive does not use light tiling so it has no affect on it. We see that both clustered forward+ and clustered deferred perform best with lower max lights per tile. However, at 512 lights per tile, there are noticable visual bugs. This is because not all lights are being accounted for as reaching the max begins to cut off lights from contributing to the scenes color. 
+![bug](img/visualbug.png)
+Thus, this becomes more of a quality test rather than performance. For testing purposes, 2058 will be the max number of lights per tile as this minimizes the risk of lights not being included while not killing performance. 
 
+Now we are able to compare each of the implementations. Below is a graph showing the frame rate of each implementation with increasing number of lights. 
+![fps](img/lightcount.png)
+We can see that clustered deferred performs best in all cases. This makes sense as it is the most optimized method of the three for rendering. It capitalizes on the optimizations of forward plus and deferred, making it the best performer of the three. Additionally, we see that as the number of lights increases, the rate at which fps drops decreases for clustered forward+ and clustered deferred. This is because these algorithms are meant for handling large numbers of lights. Tiling lights means that increasing the number of lights won't be as difficult to compute as a naive implementation. If naive were to run better, we would likely see that rate at which naive falls off would be much faster compared to these two implementations. 
 
 ### Credits
 
+- UPenn GPU Programming and Architecture Forward and Deferred Shading Slides (by Patrick Cozzi and Mohammed Sheznan)
+- Upenn CIS4600 an CIS4610 Slides (by Adam Mally)
 - [Vite](https://vitejs.dev/)
 - [loaders.gl](https://loaders.gl/)
 - [dat.GUI](https://github.com/dataarts/dat.gui)

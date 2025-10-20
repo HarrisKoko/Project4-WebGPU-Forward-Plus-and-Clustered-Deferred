@@ -31,7 +31,7 @@
 @group(1) @binding(2) var gBufferAlbedo: texture_2d<f32>;
 
 // Debug toggles
-const SHOW_ALBEDO   : bool = true; 
+const SHOW_ALBEDO   : bool = false; 
 const SHOW_NORMAL   : bool = false; 
 const SHOW_POSITION : bool = false; 
 
